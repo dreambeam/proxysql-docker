@@ -25,7 +25,7 @@ RUN chmod a+x /usr/bin/jq
 # COPY add_cluster_nodes.sh /usr/bin/add_cluster_nodes.sh
 # RUN chmod a+x /usr/bin/add_cluster_nodes.sh
 
-COPY cluster_watch.sh /clusterwatch.sh
+COPY clusterwatch.sh /clusterwatch.sh
 RUN chmod a+x /clusterwatch.sh
 
 ADD supervisord.conf /etc/supervisord.conf
