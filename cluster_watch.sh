@@ -53,6 +53,7 @@ function update_serverlist() {
 		fi
 	done
 }
+echo "$(date +'%Y-%m-%d %H:%M:%S,%3N') ${ME} START"
 
 while true; do
 	sleep 5
@@ -63,6 +64,9 @@ while true; do
 	update_proxysql
 	
 done
+
+echo "$(date +'%Y-%m-%d %H:%M:%S,%3N') ${ME} STOP"
+
 
 #for i in $(curl -s http://$DISCOVERY_SERVICE/v2/keys/pxc-cluster/$CLUSTER_NAME/ | jq -r '.node.nodes[]?.key' | awk -F'/' '{print $(NF)}')
 #do

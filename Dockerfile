@@ -5,7 +5,6 @@ RUN yum install -y epel-release
 
 RUN yum -y update && yum clean all
 
-# RUN yum install -y https://github.com/sysown/proxysql/releases/download/v1.2.1/proxysql-1.2.1-1-centos7.x86_64.rpm
 RUN yum install -y https://github.com/sysown/proxysql/releases/download/v1.3.3/proxysql-1.3.3-1-centos7.x86_64.rpm
 
 RUN rpmkeys --import https://www.percona.com/downloads/RPM-GPG-KEY-percona
