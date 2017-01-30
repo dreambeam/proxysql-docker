@@ -56,7 +56,7 @@ function update_serverlist() {
 	done
 	if [[ ${CHANGES} == true ]]
 	then
-		mysql --defaults-file=<(mycnf_gen) -h 127.0.0.1 -P${ADMIN_PORT} -e "LOAD MYSQL SERVERS TO RUNTIME; SAVE MYSQL SERVERS TO DISK;"
+		mysql --defaults-file=<(mycnf_gen) -e "LOAD MYSQL SERVERS TO RUNTIME; SAVE MYSQL SERVERS TO DISK;"
 	fi
 }
 
