@@ -59,7 +59,7 @@ function setup_monitoring() {
 
 echo "$(date +'%Y-%m-%d %H:%M:%S,%3N') ${ME} START"
 
-if [ $MYSQL_BOOTSTRAP == "true" ]; then
+if [ "${MYSQL_BOOTSTRAP}" == "true" ]; then
 	echo "$(date +'%Y-%m-%d %H:%M:%S,%3N') ${ME} Creating mysql superuser"
 	
 	sleep 10 # let proxysql start gracefully before continuing
@@ -75,6 +75,7 @@ if [ $MYSQL_BOOTSTRAP == "true" ]; then
 
 fi
 
+setup_monitoring
 
 while true; do
 	sleep ${DISCOVERY_SLEEP:-15}
