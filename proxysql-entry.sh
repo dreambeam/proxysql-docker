@@ -9,4 +9,11 @@ if [ -z "$DISCOVERY_SERVICE" ]; then
         exit 1
 fi
 
+
+sed -e "s;%ADMIN_USER%;${ADMIN_USER:-admin};g" \
+-e "s;%ADMIN_PASS%;${ADMIN_PASS:-admin};g" \
+-e "s;%ADMIN_PORT%;${ADMIN_PORT:-6032};g" \
+/etc/proxysql.tmpl > /etc/proxysql.cnf
+
+
 /usr/bin/proxysql --initial -f -c /etc/proxysql.cnf 

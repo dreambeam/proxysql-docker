@@ -2,8 +2,8 @@ datadir="/var/lib/proxysql"
 
 admin_variables =
 {
-	admin_credentials="admin:admin"
-	mysql_ifaces="0.0.0.0:6032"
+	admin_credentials="%ADMIN_USER%:%ADMIN_PASS%"
+	mysql_ifaces="0.0.0.0:%ADMIN_PORT%"
 	refresh_interval=2000
 }
 
