@@ -15,5 +15,6 @@ sed -e "s;%ADMIN_USER%;${ADMIN_USER:-admin};g" \
 -e "s;%ADMIN_PORT%;${ADMIN_PORT:-6032};g" \
 /etc/proxysql.tmpl > /etc/proxysql.cnf
 
+sleep 1
 
 /usr/bin/proxysql --initial -f -c /etc/proxysql.cnf 
