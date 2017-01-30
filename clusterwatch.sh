@@ -21,7 +21,7 @@ function update_proxysql() {
 
 function update_serverlist() {
 	# Get current servers in proxysql
-	IPS=`mysql --defaults-file=<(mycnf_gen) -h 127.0.0.1 -P6032 -B --disable-column-names -e 'SELECT hostname from mysql_servers' | sort`
+	IPS=`mysql --defaults-file=<(mycnf_gen) -h 127.0.0.1 -P${ADMIN_PORT:-6032} -B --disable-column-names -e 'SELECT hostname from mysql_servers' | sort`
 	
 	# Get cluster cluster members from discovery
 	NEWIPS=`curl -s http://$DISCOVERY_SERVICE/v2/keys/pxc-cluster/$CLUSTER_NAME/ | jq -r '.node.nodes[]?.key' | awk -F'/' '{print $(NF)}' | sort`
