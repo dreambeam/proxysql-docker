@@ -1,35 +1,33 @@
 FROM centos:7
 MAINTAINER Joakim Karlsson <jk@patientsky.com>
 
-RUN yum install -y epel-release
-
 RUN yum -y update && yum clean all
 
-RUN yum install -y https://github.com/sysown/proxysql/releases/download/v1.3.3/proxysql-1.3.3-1-centos7.x86_64.rpm
-
+RUN curl -s https://packagecloud.io/install/repositories/imeyer/runit/script.rpm.sh | bash
 RUN rpmkeys --import https://www.percona.com/downloads/RPM-GPG-KEY-percona
-RUN yum install -y http://www.percona.com/downloads/percona-release/redhat/0.1-3/percona-release-0.1-3.noarch.rpm
-RUN yum install -y Percona-Server-client-56
+RUN yum install -y https://github.com/sysown/proxysql/releases/download/v1.3.3/proxysql-1.3.3-1-centos7.x86_64.rpm
+RUN yum install -y http://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm
+RUN yum install -y Percona-Server-client-56 runit && yum clean all
 
-RUN yum -y install supervisor && yum clean all
-
-COPU proxysql.tmpl /etc/proxysql.tmpl
-COPY proxysql-entry.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-COPY jq /usr/bin/jq
+COPY bin/jq /usr/bin/jq
 RUN chmod a+x /usr/bin/jq
 
-COPY clusterwatch.sh /clusterwatch.sh
+COPY scripts/clusterwatch.sh /clusterwatch.sh
 RUN chmod a+x /clusterwatch.sh
 
-COPY supervisord.conf /etc/supervisord.conf
+COPY services/proxysql /etc/service/proxysql/run
+RUN chmod a+x /etc/service/proxysql/run
+
+COPY services/clusterwatch /etc/service/clusterwatch/run
+RUN chmod a+x /etc/service/clusterwatch/run
+
+COPY template/proxysql.tmpl /etc/proxysql.tmpl
 
 VOLUME /var/lib/proxysql
 
 EXPOSE 3306 6032
 ONBUILD RUN yum update -y
 
-ENTRYPOINT ["/usr/bin/supervisord"]
-CMD ["-c", "/etc/supervisord.conf"]
+ENTRYPOINT ["/usr/sbin/runsvdir"]
+CMD ["-P", "/etc/service"]
 
