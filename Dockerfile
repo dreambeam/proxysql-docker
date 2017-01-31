@@ -13,22 +13,17 @@ RUN yum install -y Percona-Server-client-56
 
 RUN yum -y install supervisor && yum clean all
 
-
-ADD proxysql.tmpl /etc/proxysql.tmpl
+COPU proxysql.tmpl /etc/proxysql.tmpl
 COPY proxysql-entry.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-
 
 COPY jq /usr/bin/jq
 RUN chmod a+x /usr/bin/jq
 
-# COPY add_cluster_nodes.sh /usr/bin/add_cluster_nodes.sh
-# RUN chmod a+x /usr/bin/add_cluster_nodes.sh
-
 COPY clusterwatch.sh /clusterwatch.sh
 RUN chmod a+x /clusterwatch.sh
 
-ADD supervisord.conf /etc/supervisord.conf
+COPY supervisord.conf /etc/supervisord.conf
 
 VOLUME /var/lib/proxysql
 
