@@ -1,0 +1,4 @@
+#!/bin/sh -e
+exec 2>&1
+sleep 10 # allow proxysql to start gracefully
+exec /clusterwatch.sh
