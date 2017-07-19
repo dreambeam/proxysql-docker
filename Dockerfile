@@ -5,9 +5,10 @@ RUN yum -y update && yum clean all
 
 RUN curl -s https://packagecloud.io/install/repositories/imeyer/runit/script.rpm.sh | bash
 RUN rpmkeys --import https://www.percona.com/downloads/RPM-GPG-KEY-percona
-RUN yum install -y https://github.com/sysown/proxysql/releases/download/v1.3.3/proxysql-1.3.3-1-centos7.x86_64.rpm
+RUN yum install -y https://github.com/sysown/proxysql/releases/download/v1.3.8/proxysql-1.3.8-1-centos7.x86_64.rpm
 RUN yum install -y http://www.percona.com/downloads/percona-release/redhat/0.1-4/percona-release-0.1-4.noarch.rpm
-RUN yum install -y Percona-Server-client-56 runit && yum clean all
+RUN yum install -y Percona-Server-client-57 runit && yum clean all
+
 
 COPY bin/jq /usr/bin/jq
 RUN chmod a+x /usr/bin/jq
@@ -30,4 +31,3 @@ ONBUILD RUN yum update -y
 
 ENTRYPOINT ["/usr/sbin/runsvdir"]
 CMD ["-P", "/etc/service"]
-
